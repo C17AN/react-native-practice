@@ -6,9 +6,10 @@ import {Todo} from '../types/Todo';
 type TodoListProps = {
   todos: Todo[];
   onToggle: (id: number) => void;
+  onRemove: (id: number) => void;
 };
 
-const TodoList = ({todos, onToggle}: TodoListProps) => {
+const TodoList = ({todos, onToggle, onRemove}: TodoListProps) => {
   return (
     <FlatList
       ItemSeparatorComponent={() => <View style={styles.seperator} />}
@@ -16,7 +17,15 @@ const TodoList = ({todos, onToggle}: TodoListProps) => {
       data={todos}
       renderItem={({item}) => {
         const {id, text, done} = item;
-        return <TodoItem id={id} text={text} done={done} onToggle={onToggle} />;
+        return (
+          <TodoItem
+            id={id}
+            text={text}
+            done={done}
+            onToggle={onToggle}
+            onRemove={onRemove}
+          />
+        );
       }}
       keyExtractor={item => item.id.toString()}
     />
