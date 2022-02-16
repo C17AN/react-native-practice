@@ -1,53 +1,42 @@
 import React from 'react';
 import DetailScreen from './screens/DetailScreen';
-import HomeScreen from './screens/HomeScreen';
+// import HomeScreen from './screens/HomeScreen';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Button, Text, View} from 'react-native';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
-const {Navigator, Screen} = createNativeStackNavigator();
+// const {Navigator, Screen} = createNativeStackNavigator();
+const {Navigator, Screen} = createDrawerNavigator();
+
+const HomeScreen = ({navigation}: {navigation: any}) => {
+  return (
+    <View>
+      <Text>Home</Text>
+      <Button title="열기" onPress={() => navigation.openDrawer()} />
+      <Button
+        title="Setting 열기"
+        onPress={() => navigation.navigate('settings')}
+      />
+    </View>
+  );
+};
+
+const SettingScreen = ({navigation}) => {
+  return (
+    <View>
+      <Text>Setting</Text>
+      <Button title="뒤로가기" onPress={() => navigation.goBack()} />
+    </View>
+  );
+};
 
 const App = () => {
+  console.log('rendered');
   return (
     <NavigationContainer>
-      <Navigator initialRouteName="Home">
-        <Screen
-          name="Home"
-          component={HomeScreen}
-          options={{
-            title: '홈',
-            headerStyle: {
-              backgroundColor: '#29b6f6',
-            },
-            headerTintColor: '#ffffff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              fontSize: 20,
-            },
-          }}
-        />
-        <Screen
-          name="Detail"
-          component={DetailScreen}
-          options={{
-            headerBackVisible: false,
-            headerLeft: ({onPress}) => (
-              <TouchableOpacity onPress={onPress}>
-                <Text>Left</Text>
-              </TouchableOpacity>
-            ),
-            headerTitle: ({children}) => (
-              <View>
-                <Text>{children}</Text>
-              </View>
-            ),
-            headerRight: () => (
-              <View>
-                <Text>Right</Text>
-              </View>
-            ),
-          }}
-        />
+      <Navigator initialRouteName="Home" backBehavior="history">
+        <Screen name="Home" component={HomeScreen} />
+        <Screen name="Setting" component={SettingScreen} />
       </Navigator>
     </NavigationContainer>
   );
