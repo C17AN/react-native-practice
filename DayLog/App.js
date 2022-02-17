@@ -9,12 +9,15 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
+import LogContext, { LogContextProvider } from './context/LogContext';
 import RootStack from './screens/RootStack';
 
 const App = () => {
   return (
     <NavigationContainer>
-      <RootStack />
+      <LogContextProvider>
+        <RootStack />
+      </LogContextProvider>
     </NavigationContainer>
   );
 };
