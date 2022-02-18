@@ -1,20 +1,58 @@
 import React, {createContext, useState} from 'react';
+import {v4 as uuidv4} from 'uuid';
 
-const LogContext = createContext<LogContextType | undefined>(undefined);
-type LogContextType = {
-  text: string;
-  handleTextChange: (value: string) => void;
+export type LogType = {
+  id: string;
+  title: string;
+  body: string;
+  date: string;
 };
 
-export function LogContextProvider({children}) {
-  const [text, setText] = useState('');
+type LogContextType = {
+  logs: LogType[];
+  onCreate: ({title, body, date}) => void;
+};
 
-  const handleTextChange = (value: string) => {
-    setText(value);
+const mockData: LogType[] = [
+  {
+    id: uuidv4(),
+    title: '아이템 1',
+    body: '내용 1',
+    date: new Date().toISOString(),
+  },
+  {
+    id: uuidv4(),
+    title: '아이템 2',
+    body: '내용 2',
+    date: new Date(Date.now() - 1000 * 60 * 3).toISOString(),
+  },
+  {
+    id: uuidv4(),
+    title: '아이템 3',
+    body: '내용 3',
+    date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 3).toISOString(),
+  },
+];
+
+const LogContext = createContext<LogContextType | undefined>(undefined);
+
+export function LogContextProvider({children}) {
+  const [logs, setLogs] = useState(mockData);
+
+  const onCreate = ({title, body, date}) => {
+    console.log('uuid : ', uuidv4());
+    const log = {
+      id: uuidv4(),
+      title,
+      body,
+      date,
+    };
+
+    setLogs([log, ...logs]);
   };
 
   return (
-    <LogContext.Provider value={{text, handleTextChange}}>
+    <LogContext.Provider value={{logs, onCreate}}>
       {children}
     </LogContext.Provider>
   );

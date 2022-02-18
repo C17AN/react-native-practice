@@ -14,7 +14,11 @@ const RootStack = () => {
         component={MainTab}
         options={{ headerShown: false }}
       />
-      <Screen name="WriteScreen" component={WriteScreen} />
+      <Screen
+        name="WriteScreen"
+        component={WriteScreen}
+        options={{ headerShown: false }}
+      />
     </Navigator>
   );
 };
