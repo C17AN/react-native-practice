@@ -13,7 +13,7 @@ type LogContextType = {
   onCreate: ({title, body, date}) => void;
 };
 
-const mockData: LogType[] = [
+const mock3Data: LogType[] = [
   {
     id: uuidv4(),
     title: '아이템 1',
@@ -34,10 +34,17 @@ const mockData: LogType[] = [
   },
 ];
 
+const mock10Data: LogType[] = Array.from({length: 10}).map((_, index) => ({
+  id: uuidv4(),
+  title: `아이템 ${index}`,
+  body: `내용 ${index}`,
+  date: new Date().toISOString(),
+}));
+
 const LogContext = createContext<LogContextType | undefined>(undefined);
 
 export function LogContextProvider({children}) {
-  const [logs, setLogs] = useState(mockData);
+  const [logs, setLogs] = useState(mock10Data);
 
   const onCreate = ({title, body, date}) => {
     console.log('uuid : ', uuidv4());
