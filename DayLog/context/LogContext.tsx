@@ -1,4 +1,5 @@
 import React, {createContext, useState} from 'react';
+import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
 
 export type LogType = {
@@ -11,6 +12,8 @@ export type LogType = {
 type LogContextType = {
   logs: LogType[];
   onCreate: ({title, body, date}) => void;
+  onModify: (selectedLog: any) => void;
+  onRemove: (id: number | string) => void;
 };
 
 const mock3Data: LogType[] = [
@@ -47,7 +50,6 @@ export function LogContextProvider({children}) {
   const [logs, setLogs] = useState(mock10Data);
 
   const onCreate = ({title, body, date}) => {
-    console.log('uuid : ', uuidv4());
     const log = {
       id: uuidv4(),
       title,
@@ -58,8 +60,20 @@ export function LogContextProvider({children}) {
     setLogs([log, ...logs]);
   };
 
+  const onModify = modifiedLog => {
+    const nextLogs = logs.map(log =>
+      log.id === modifiedLog.id ? modifiedLog : log,
+    );
+    setLogs(nextLogs);
+  };
+
+  const onRemove = id => {
+    const nextLogs = logs.filter(log => log.id !== id);
+    setLogs(nextLogs);
+  };
+
   return (
-    <LogContext.Provider value={{logs, onCreate}}>
+    <LogContext.Provider value={{logs, onCreate, onModify, onRemove}}>
       {children}
     </LogContext.Provider>
   );

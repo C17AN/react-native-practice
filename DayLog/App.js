@@ -11,14 +11,17 @@ import {
   View,
 } from 'react-native';
 import LogContext, { LogContextProvider } from './context/LogContext';
+import { SearchContextProvider } from './context/SearchContext';
 import RootStack from './screens/RootStack';
 
 const App = () => {
   return (
     <NavigationContainer>
-      <LogContextProvider>
-        <RootStack />
-      </LogContextProvider>
+      <SearchContextProvider>
+        <LogContextProvider>
+          <RootStack />
+        </LogContextProvider>
+      </SearchContextProvider>
     </NavigationContainer>
   );
 };

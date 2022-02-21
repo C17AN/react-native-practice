@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
+import CalendarView from '../components/CalendarView';
 
 const FadeAndOut = () => {
   const animation = useRef(new Animated.Value(1)).current;
@@ -100,8 +101,9 @@ const SlideLeftAndRight = () => {
 const CalendarScreen = () => {
   return (
     <View style={styles.block}>
-      <FadeAndOut />
-      <SlideLeftAndRight />
+      {/* <FadeAndOut />
+      <SlideLeftAndRight /> */}
+      <CalendarView />
     </View>
   );
 };

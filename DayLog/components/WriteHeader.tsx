@@ -6,7 +6,7 @@ import TransparentCircleButton from './TransparentCircleButton';
 
 type Props = {};
 
-const WriteHeader = ({onSave}) => {
+const WriteHeader = ({onSave, onAskRemove, isEditing}) => {
   const navigation = useNavigation();
   const onGoBack = () => {
     navigation.pop();
@@ -20,11 +20,14 @@ const WriteHeader = ({onSave}) => {
         color="#424242"
       />
       <View style={styles.buttons}>
-        <TransparentCircleButton
-          name="delete-forever"
-          color="#ef5350"
-          hasMarginRight
-        />
+        {isEditing && (
+          <TransparentCircleButton
+            name="delete-forever"
+            color="#ef5350"
+            hasMarginRight
+            onPress={onAskRemove}
+          />
+        )}
         <TransparentCircleButton
           name="check"
           color="#009688"
